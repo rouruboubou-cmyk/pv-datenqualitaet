@@ -31,29 +31,29 @@ Alle eingebauten Fehler werden erkannt; ein Selbsttest im Notebook prüft das au
 
 Im Notebook lässt sich die Auswertung je Kunde interaktiv filtern: PV-Anlagen, Zeitraum (Von/Bis), Auflösung (stündlich, täglich, monatlich, jährlich) und Kennzahl (Erzeugung oder Marktwert). Die Zeitachse folgt dem gewählten Zeitraum; lange stündliche Zeiträume lassen sich mit einem Schieberegler durchblättern. GitHub zeigt die interaktiven Grafiken nicht an, deshalb hier ein Screenshot (violett München, grün Hamburg):
 
-![Kundendashboard](Bilder/dashboard.png)
+![Kundendashboard](dashboard.png)
 
 ## Fehlerfälle aus dem Notebook
 
 **Fehlende Werte (Hamburg, 15.06.2023):** Drei Zeilen fehlen in der Lieferung und werden vorläufig ersetzt. Status: Daten beim MSB anfordern.
 
-![Fehlende Werte Hamburg](Bilder/hamburg.png)
+![Fehlende Werte Hamburg](hamburg.png)
 
 **Unplausible Werte (München, 15.06.2023):** Zwei Werte über 120 % der Nennleistung werden markiert und ersetzt. Status: Prüfung erforderlich.
 
-![Unplausible Werte München](Bilder/muenchen.png)
+![Unplausible Werte München](muenchen.png)
 
 **Doppelter Zeitstempel (Dresden, 03.07.2023):** Eine Stunde wurde zweimal mit unterschiedlichen Werten geliefert; beide werden verworfen und ersetzt. Status: Daten beim MSB anfordern.
 
-![Doppelter Zeitstempel Dresden](Bilder/dresden.png)
+![Doppelter Zeitstempel Dresden](dresden.png)
 
 **Erzeugung in der Nacht (Erfurt, 20.08.2023):** Drei Nachtstunden enthalten Erzeugung; die Werte werden auf 0 kWh korrigiert. Status: Prüfung erforderlich.
 
-![Erzeugung in der Nacht Erfurt](Bilder/erfurt.png)
+![Erzeugung in der Nacht Erfurt](erfurt.png)
 
 ## Monatserzeugung 2023 (geprüfte Daten)
 
-![Monatserzeugung](Bilder/monatserzeugung.png)
+![Monatserzeugung](monatserzeugung.png)
 
 ## Ergebnisse 2023
 
@@ -75,7 +75,6 @@ Der durchschnittliche Day-Ahead-Preis 2023 lag bei 95,19 €/MWh. Die Anlagen er
 ```
 ├── PV_Portfolio_Analytics_VSCode.ipynb   Notebook mit allen Schritten
 ├── requirements.txt                      benötigte Python-Pakete
-├── Bilder/                               Grafiken für diese Übersicht
 └── Daten/
     ├── Lastgänge/                        PVGIS-Zeitreihen je Anlage (CSV)
     ├── Preise/                           Day-Ahead-Preise DE-LU (SMARD-Export, CSV)
