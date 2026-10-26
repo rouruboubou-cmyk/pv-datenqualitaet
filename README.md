@@ -27,6 +27,34 @@ Das Projekt bildet in vereinfachter Form ab, wie Erzeugungsdaten von PV-Anlagen 
 
 Alle eingebauten Fehler werden erkannt; ein Selbsttest im Notebook prüft das automatisch. Der Tagesbericht ordnet jedem auffälligen Tag eine nächste Aktion zu („Daten beim MSB anfordern“ oder „Prüfung erforderlich“) und berücksichtigt die Zeitumstellung (23- und 25-Stunden-Tage).
 
+## Kundendashboard
+
+Im Notebook lässt sich die Auswertung je Kunde interaktiv filtern: PV-Anlagen, Zeitraum (Von/Bis), Auflösung (stündlich, täglich, monatlich, jährlich) und Kennzahl (Erzeugung oder Marktwert). Die Zeitachse folgt dem gewählten Zeitraum; lange stündliche Zeiträume lassen sich mit einem Schieberegler durchblättern. GitHub zeigt die interaktiven Grafiken nicht an, deshalb hier ein Screenshot (violett München, grün Hamburg):
+
+![Kundendashboard](Bilder/dashboard.png)
+
+## Fehlerfälle aus dem Notebook
+
+**Fehlende Werte (Hamburg, 15.06.2023):** Drei Zeilen fehlen in der Lieferung und werden vorläufig ersetzt. Status: Daten beim MSB anfordern.
+
+![Fehlende Werte Hamburg](Bilder/hamburg.png)
+
+**Unplausible Werte (München, 15.06.2023):** Zwei Werte über 120 % der Nennleistung werden markiert und ersetzt. Status: Prüfung erforderlich.
+
+![Unplausible Werte München](Bilder/muenchen.png)
+
+**Doppelter Zeitstempel (Dresden, 03.07.2023):** Eine Stunde wurde zweimal mit unterschiedlichen Werten geliefert; beide werden verworfen und ersetzt. Status: Daten beim MSB anfordern.
+
+![Doppelter Zeitstempel Dresden](Bilder/dresden.png)
+
+**Erzeugung in der Nacht (Erfurt, 20.08.2023):** Drei Nachtstunden enthalten Erzeugung; die Werte werden auf 0 kWh korrigiert. Status: Prüfung erforderlich.
+
+![Erzeugung in der Nacht Erfurt](Bilder/erfurt.png)
+
+## Monatserzeugung 2023 (geprüfte Daten)
+
+![Monatserzeugung](Bilder/monatserzeugung.png)
+
 ## Ergebnisse 2023
 
 | Anlage | Leistung (kWp) | Erzeugung (MWh) | Ertrag (kWh/kWp) | Marktwert (€/MWh) |
@@ -38,11 +66,16 @@ Alle eingebauten Fehler werden erkannt; ein Selbsttest im Notebook prüft das au
 
 Der durchschnittliche Day-Ahead-Preis 2023 lag bei 95,19 €/MWh. Die Anlagen erzielen rund 77 % davon, weil PV vor allem mittags einspeist, wenn viele Anlagen gleichzeitig erzeugen und die Preise niedrig sind.
 
+**Plausibilisierung:** Der offizielle Jahresmarktwert Solar 2023 lag bei 7,2 ct/kWh (72 €/MWh). Die simulierten Anlagen liegen mit 73–74 €/MWh in derselben Größenordnung.
+
+**Warum nur 2023?** PVGIS stellt stündliche Zeitreihen nur für vergangene Jahre bereit, und bis September 2025 wurden die Day-Ahead-Preise stündlich ermittelt. So passen PV-Werte und Preise ohne Umrechnung zusammen. Das Notebook prüft, ob Preis- und PV-Daten aus demselben Jahr stammen.
+
 ## Projektstruktur
 
 ```
 ├── PV_Portfolio_Analytics_VSCode.ipynb   Notebook mit allen Schritten
 ├── requirements.txt                      benötigte Python-Pakete
+├── Bilder/                               Grafiken für diese Übersicht
 └── Daten/
     ├── Lastgänge/                        PVGIS-Zeitreihen je Anlage (CSV)
     ├── Preise/                           Day-Ahead-Preise DE-LU (SMARD-Export, CSV)
@@ -66,7 +99,8 @@ Anschließend das Notebook in VS Code oder Jupyter öffnen, den Kernel `.venv` a
 - Reale Messwerte kommen über die Marktkommunikation (z. B. MSCONS) mit Marktlokations-IDs und Korrekturlieferungen.
 - Schwellenwerte und Nacht-Referenz sind vereinfachte Projektannahmen.
 - Die Ersatzwertmethode (Mittelwert aus Vor- und Folgetag) ist bei wechselndem Wetter ungenau und nicht abrechnungsrelevant.
-- Der Marktwert ist eine Modellrechnung, kein tatsächlich erzielter Erlös. Kunden und Fehlerfälle sind fiktiv.
+- Der Marktwert ist eine Modellrechnung, kein tatsächlich erzielter Erlös. Für eine reale Erlösberechnung kämen u. a. Marktprämie, § 51 EEG (negative Preise), Direktvermarktungskosten und Redispatch-Ausgleich hinzu (siehe Notebook, Abschnitt 6.3).
+- Kunden und Fehlerfälle sind fiktiv.
 
 ## Datenquellen
 
